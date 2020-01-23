@@ -168,7 +168,7 @@ export default class RegisterView extends Component {
           </View>
 
           <View style={styles.buttonsContainer}>
-          <GradientButton
+            <GradientButton
               text="Register"
               textStyle={{ fontSize: 20 }}
               gradientBegin= {ButtonColors.primary}
@@ -179,8 +179,15 @@ export default class RegisterView extends Component {
               impact
               onPressAction={this.onClickRegister}
             />
-          <Text accessibilityRole='button' style={styles.textButton} onPress={()=> navigate('Login')}>I already have an account</Text>
-        </View>
+
+            <Text 
+              accessibilityRole='button'
+              style={styles.textButton}
+              onPress={()=> navigate('Login')}
+            >
+              I already have an account
+            </Text>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -195,7 +202,6 @@ const styles = StyleSheet.create({
   logoContainer:{
     flex:1,
     justifyContent:"flex-end",
-    // backgroundColor:'red'
   },
   logoText:{
     color:LogoColors.text,
@@ -206,7 +212,6 @@ const styles = StyleSheet.create({
     flex:2,
     alignItems:'center',
     justifyContent:"flex-start",
-    // backgroundColor:'blue'
   },
   formItem:{
     width:'90%'
@@ -222,7 +227,6 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems:"center",
     justifyContent:"space-around",
-    // backgroundColor:'green'
   },
   textButton:{
     textDecorationLine:"underline",

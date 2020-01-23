@@ -10,7 +10,6 @@ import Loader from './MiniComponents/Loader'
 import Header from './MiniComponents/Header'
 import Separator from './MiniComponents/Separator'
 import UserLists from './MiniComponents/UserLists'
-import Login from './Login'
 import { URL,Colors, ButtonColors, OverlayColors } from '../Static'
 
 export default class Share extends React.Component {
@@ -18,14 +17,12 @@ export default class Share extends React.Component {
       super(props);
       this.state = {
         myLists:[],
-        isLogged:'',
         isLoading: true,
         isVisible: false,
         users:[],
         userId:null,
         userName:'',
       }
-      this.checkLog = this.checkLog.bind(this)
       this.fetchData = this.fetchData.bind(this)
       this.startChecked = this.startChecked.bind(this)
       this.check = this.check.bind(this)
@@ -35,15 +32,7 @@ export default class Share extends React.Component {
     }
 
   componentDidMount(){
-    this.checkLog()
     this.fetchData()
-  }
-
-  async checkLog(){
-    let status = await AsyncStorage.getItem('ID')
-    this.setState({
-      isLogged:status
-    })
   }
 
   async fetchData(){
@@ -144,110 +133,104 @@ export default class Share extends React.Component {
   }
 
   render() {
-    const renderShare=
-      <Container style={styles.container}>
-          <Header title='Share lists'/>
-
-          <Content> 
-            <Separator title='My lists'/>
-            {this.state.myLists.map((l, i) => (
-                <CheckBox
-                  key={i}
-                  title={l.name}
-                  checked={this.startChecked(i)}
-                  onPress={()=> this.check(i)}
-                />
-            ))}
-          </Content>
-
-          {/*Share button*/}
-          {this.state.toShare != undefined ? 
-            this.state.toShare.includes(true) ?
-              <View style={styles.shareButtonContainer}>
-                <GradientButton
-                  text="Share"
-                  textStyle={{fontSize:15}}
-                  style={styles.shareButton}
-                  gradientBegin= {ButtonColors.primary}
-                  gradientEnd={ButtonColors.second}
-                  height={45}
-                  width='30%'
-                  radius={10}
-                  impact
-                  onPressAction={this.visibleOverlay}
-                />
-              </View>
-            :null
-          :null
-          }
-
-          {/*Overlay */}
-          {this.state.isVisible ?
-            <Overlay 
-              isVisible={this.state.isVisible} 
-              fullScreen
-            >
-
-              {/*Buttons */}
-              <View style={styles.overlayButtonsContainer}>
-                <GradientButton
-                  text="Cancel"
-                  textStyle={{fontSize:15}}
-                  style={styles.shareButton}
-                  gradientBegin= {OverlayColors.cancelButtonPrimary}
-                  gradientEnd={OverlayColors.cancelButtonSecond}
-                  height={45}
-                  width='30%'
-                  radius={10}
-                  impact
-                  onPressAction={this.visibleOverlay}
-                />
-                <GradientButton
-                  text="Share"
-                  textStyle={{fontSize:15}}
-                  style={styles.shareButton}
-                  gradientBegin= {OverlayColors.shareButtonPrimary}
-                  gradientEnd={OverlayColors.shareButtonSecond}
-                  height={45}
-                  width='30%'
-                  radius={10}
-                  impact
-                  onPressAction={this.postSubscriptions}
-                />
-              </View>
-              
-              {/*Search input */}
-              <TextInput
-                placeholder="Search user"
-                underlineColorAndroid='#aaa'
-                style={styles.overlayInput}
-                value={this.state.userName}
-                onChangeText={text => this.searchUser(text)} 
-              />
-              
-              {/*List of fetched users*/}
-              <View style={{height:'70%'}}>
-                <UserLists
-                  users={this.state.users}
-                  getUserId={(id,name) => {this.getUser(id,name)}}
-                />
-              </View>
-
-            </Overlay>
-          :null
-          }
-
-          <Footer/>
-        </Container>
+    if(this.state.isLoading ) return <Loader/> 
+      
     return (
-        <Container>
-          {this.state.isLogged != null 
-            ? this.state.isLoading 
-              ? <Loader/> 
-              : renderShare
-            : <Login/>
-          }
-        </Container>  
+      <Container style={styles.container}>
+        <Header title='Share lists'/>
+
+        <Content> 
+          <Separator title='My lists'/>
+          {this.state.myLists.map((l, i) => (
+              <CheckBox
+                key={i}
+                title={l.name}
+                checked={this.startChecked(i)}
+                onPress={()=> this.check(i)}
+              />
+          ))}
+        </Content>
+
+        {/*Share button*/}
+        {this.state.toShare != undefined ? 
+          this.state.toShare.includes(true) ?
+            <View style={styles.shareButtonContainer}>
+              <GradientButton
+                text="Share"
+                textStyle={{fontSize:15}}
+                style={styles.shareButton}
+                gradientBegin= {ButtonColors.primary}
+                gradientEnd={ButtonColors.second}
+                height={45}
+                width='30%'
+                radius={10}
+                impact
+                onPressAction={this.visibleOverlay}
+              />
+            </View>
+          :null
+        :null
+        }
+
+        {/*Overlay */}
+        {this.state.isVisible ?
+          <Overlay 
+            isVisible={this.state.isVisible} 
+            fullScreen
+          >
+
+            {/*Buttons */}
+            <View style={styles.overlayButtonsContainer}>
+              <GradientButton
+                text="Cancel"
+                textStyle={{fontSize:15}}
+                style={styles.shareButton}
+                gradientBegin= {OverlayColors.cancelButtonPrimary}
+                gradientEnd={OverlayColors.cancelButtonSecond}
+                height={45}
+                width='30%'
+                radius={10}
+                impact
+                onPressAction={this.visibleOverlay}
+              />
+              <GradientButton
+                text="Share"
+                textStyle={{fontSize:15}}
+                style={styles.shareButton}
+                gradientBegin= {OverlayColors.shareButtonPrimary}
+                gradientEnd={OverlayColors.shareButtonSecond}
+                height={45}
+                width='30%'
+                radius={10}
+                impact
+                onPressAction={this.postSubscriptions}
+              />
+            </View>
+            
+            {/*Search input */}
+            <TextInput
+              placeholder="Search user"
+              underlineColorAndroid='#aaa'
+              style={styles.overlayInput}
+              value={this.state.userName}
+              onChangeText={text => this.searchUser(text)} 
+            />
+            
+            {/*List of fetched users*/}
+            <View style={{height:'70%'}}>
+              <UserLists
+                users={this.state.users}
+                getUserId={(id,name) => {this.getUser(id,name)}}
+              />
+            </View>
+
+          </Overlay>
+        :null
+        }
+
+        <Footer/>
+
+      </Container>
     );
   }
 }

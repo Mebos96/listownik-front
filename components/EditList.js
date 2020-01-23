@@ -8,7 +8,7 @@ import AddProduct from './MiniComponents/AddProduct'
 import NewProductsList from './MiniComponents/NewProductsList'
 import AlreadyProductsList from './MiniComponents/AlreadyProductsList'
 import Loader from './MiniComponents/Loader'
-import { URL, Colors, ButtonColors } from '../Static'
+import { URL, Colors } from '../Static'
 
 export default class EditList extends Component {
 
@@ -221,13 +221,27 @@ export default class EditList extends Component {
   }
 
   render() {
-    const renderList =
+
+    if(this.state.isLoading === true) return <Loader/>
+    if(this.state.isVisible === true){
+      return(
+        <AddProduct 
+          isVisible={this.state.isVisible}
+          setVisible={this.setVisible}
+          types={this.state.types}
+          units={this.state.units}
+          makeProducts={this.makeProducts}
+        />
+      )
+    }
+      
+    return (
       <Container style={styles.container}>
         <Header title='Edit list'/>
         <Content contentContainerStyle={styles.content}>
 
           {/*Input nazwy listy*/}
-          <View style={inputListNameContainer}>
+          <View style={styles.inputListNameContainer}>
             <TextInput
               placeholder="List name"
               value={this.state.listName}
@@ -271,21 +285,6 @@ export default class EditList extends Component {
 
         </Content>
         <Footer/>
-      </Container>
-    return (
-      <Container>
-        {this.state.isLoading === true
-            ? <Loader/>
-            : this.state.isVisible === true
-                ? <AddProduct 
-                    isVisible={this.state.isVisible}
-                    setVisible={this.setVisible}
-                    types={this.state.types}
-                    units={this.state.units}
-                    makeProducts={this.makeProducts}
-                 />
-                : renderList 
-        }
       </Container>
     );
   }

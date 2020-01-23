@@ -6,7 +6,7 @@ import GradientButton from 'react-native-gradient-buttons';
 import { NavigationActions } from 'react-navigation'
 import Footer from './MiniComponents/Footer'
 import Loader from './MiniComponents/Loader'
-import Login from './Login'
+
 import { URL, Colors, ButtonColors } from '../Static'
 
 export default class Profile extends Component {
@@ -16,20 +16,11 @@ export default class Profile extends Component {
       user:'',
       avatarUri: 'https://i.imgur.com/bWln98R.jpeg',
       isLoading :true,
-      isLogged: ''
     }
     this.logOut = this.logOut.bind(this)
   }
   componentDidMount=()=>  {
-    this.checkLog()
     this.fetchData()
-  }
-
-  async checkLog(){
-    let status = await AsyncStorage.getItem('ID')
-    this.setState({
-      isLogged : status
-    })
   }
 
   async fetchData(){
@@ -54,7 +45,12 @@ export default class Profile extends Component {
   }
   
   render () {
-    const renderProfile = 
+    if(this.state.isLogged !== null){
+      if(this.state.isLoading ) return <Loader/> 
+    }
+    else return this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Login' })], 0)
+      
+    return (
       <Container style={styles.container}>
 
         <Header style={styles.header}>
@@ -65,7 +61,6 @@ export default class Profile extends Component {
             <View style={styles.contentInfo}>
               <Text style={styles.username}>{this.state.user.username}</Text>
               <Text style={styles.email}>{this.state.user.email}</Text>
-              {/* <Text style={styles.description}>Kiedyś tu będzie piękny settings</Text> */}
             </View>
 
             <View style={styles.contentButtons}>
@@ -95,15 +90,6 @@ export default class Profile extends Component {
 
         <Footer/>
       </Container>
-    return (
-      <Container>
-        {this.state.isLogged != null
-          ? this.state.isLoading 
-            ? <Loader/> 
-            : renderProfile
-          : <Login/>
-        }
-      </Container>  
     )
   }
 }

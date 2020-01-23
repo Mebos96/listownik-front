@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Container,Content} from 'native-base';
 import {StyleSheet,Text,View,AsyncStorage, ScrollView} from 'react-native';
-import GradientButton from 'react-native-gradient-buttons'
 import Header from './MiniComponents/Header'
 import Footer from './MiniComponents/Footer'
 import Loader from './MiniComponents/Loader'
@@ -9,7 +8,7 @@ import PickerType from './MiniComponents/PickerType'
 import PickerShop from './MiniComponents/PickerShop'
 import MultiButtonShow from './MiniComponents/MultiButtonShow'
 import AlreadyProductsList from './MiniComponents/AlreadyProductsList'
-import { URL, Colors, ButtonColors } from '../Static'
+import { URL, Colors } from '../Static'
 
 export default class AddList extends Component {
 
@@ -37,6 +36,7 @@ export default class AddList extends Component {
   componentDidMount(){
     this.fetchData()
   }
+
   // Pobranie listy i produktów na liście
   async fetchData(){
     let id = await AsyncStorage.getItem('ID')
@@ -125,9 +125,13 @@ export default class AddList extends Component {
   }
 
   render() {
-    const renderList =
+    if(this.state.isLoading === true) return <Loader/>
+      
+    return (
       <Container style={styles.container}>
+
         <Header title='Show list'/>
+
         <Content contentContainerStyle={styles.content}>
 
           {/*Nazwa listy*/}
@@ -179,15 +183,11 @@ export default class AddList extends Component {
             changeSortOpen={this.changeSortOpen}
             editList={this.editList}
           />
+
         </Content>
+
         <Footer/>
-      </Container>
-    return (
-      <Container>
-        {this.state.isLoading === true
-          ? <Loader/>
-          : renderList 
-        } 
+
       </Container>
     );
   }

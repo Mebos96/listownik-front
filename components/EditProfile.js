@@ -8,7 +8,6 @@ import {
   Keyboard,
   AsyncStorage,
   TouchableOpacity,
-
 } from 'react-native';
 import { Container,Content} from 'native-base';
 import GradientButton from 'react-native-gradient-buttons';
@@ -22,7 +21,6 @@ export default class ProfileEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLogged:'',
       isLoading: true,
       user: null,
       username: '',
@@ -31,22 +29,13 @@ export default class ProfileEdit extends Component {
       repassword: '',
       avatarUri: 'https://i.imgur.com/bWln98R.jpeg',
     }
-    this.checkLog = this.checkLog.bind(this)
     this.fetchData = this.fetchData.bind(this)
     this.checkStates = this.checkStates.bind(this)
     this.saveProfile = this.saveProfile.bind(this)
   }
   
   componentDidMount(){
-    this.checkLog()
     this.fetchData()
-  }
-
-  async checkLog(){
-    let status = await AsyncStorage.getItem('ID')
-    this.setState({
-      isLogged:status
-    })
   }
 
   async fetchData(){
@@ -116,89 +105,81 @@ export default class ProfileEdit extends Component {
     }
   }
   render() {
-    const renderProfileEdit=
-    <Container style={styles.container} onPress={()=> Keyboard.dismiss()}>
-      <Header title='Edit profile'/>
-
-      <Content contentContainerStyle={styles.content}>
-
-        <View style={styles.avatarContainer}>
-          <TouchableOpacity activeOpacity={0.8} onPress={()=> console.log("Zmień obraz")} >
-            <Image style={styles.avatar} source={{uri: this.state.avatarUri }}/>
-          </TouchableOpacity>
-        </View>
-                  
-        <View style={styles.inputsContainer}>
-          <TextInput style={styles.input}
-            placeholder={this.placeholderValue('username')}
-            value={this.state.username}
-            placeholderTextColor='#fff'
-            keyboardType="name-phone-pad"
-            underlineColorAndroid='#fff'
-            onChangeText={(username) => this.setState({username})}
-          />
-
-          <TextInput style={styles.input}
-            placeholder={this.placeholderValue('email')}
-            value={this.state.email}
-            keyboardType='email-address'
-            autoCapitalize='none'
-            underlineColorAndroid='#fff'
-            placeholderTextColor='#fff'
-            onChangeText={(email) => this.setState({email})}
-          />
-
-          <TextInput style={styles.input}
-            placeholder="New Password"
-            value={this.state.password}
-            secureTextEntry={true}
-            returnKeyType='next'
-            autoCapitalize='none'
-            underlineColorAndroid='#fff'
-            placeholderTextColor='#fff'
-            onSubmitEditing={()=>{this.confirmPassword.focus()}}
-            onChangeText={(password) => this.setState({password})}
-          />
-
-          <TextInput style={styles.input}
-            placeholder="Repeat New Password"
-            value={this.state.repassword}
-            secureTextEntry={true}
-            autoCapitalize='none'
-            underlineColorAndroid='#fff'
-            placeholderTextColor='#fff'
-            ref={(ref)=>{this.confirmPassword = ref}}
-            onChangeText={(repassword) => this.setState({repassword})}
-          />
-
-        </View>
-
-        <View style={styles.buttonsContainer}>
-          <GradientButton
-            text="Save"
-            textStyle={{ fontSize: 20 }}
-            gradientBegin= {ButtonColors.primary}
-            gradientEnd={ButtonColors.second}
-            height={60}
-            width='90%'
-            radius={15}
-            impact
-            onPressAction={this.saveProfile}
-          />
-        </View>
-
-      </Content>
-      <Footer/>
-    </Container>
+    if(this.state.isLoading) return <Loader/> 
 
     return (
-      <Container>
-        {this.state.isLogged !== null
-          ? this.state.isLoading
-            ? <Loader/>
-            : renderProfileEdit
-          : null
-        }
+      <Container style={styles.container} onPress={()=> Keyboard.dismiss()}>
+        <Header title='Edit profile'/>
+
+        <Content contentContainerStyle={styles.content}>
+
+          <View style={styles.avatarContainer}>
+            <TouchableOpacity activeOpacity={0.8} onPress={()=> console.log("Zmień obraz")} >
+              <Image style={styles.avatar} source={{uri: this.state.avatarUri }}/>
+            </TouchableOpacity>
+          </View>
+                    
+          <View style={styles.inputsContainer}>
+            <TextInput style={styles.input}
+              placeholder={this.placeholderValue('username')}
+              value={this.state.username}
+              placeholderTextColor='#fff'
+              keyboardType="name-phone-pad"
+              underlineColorAndroid='#fff'
+              onChangeText={(username) => this.setState({username})}
+            />
+
+            <TextInput style={styles.input}
+              placeholder={this.placeholderValue('email')}
+              value={this.state.email}
+              keyboardType='email-address'
+              autoCapitalize='none'
+              underlineColorAndroid='#fff'
+              placeholderTextColor='#fff'
+              onChangeText={(email) => this.setState({email})}
+            />
+
+            <TextInput style={styles.input}
+              placeholder="New Password"
+              value={this.state.password}
+              secureTextEntry={true}
+              returnKeyType='next'
+              autoCapitalize='none'
+              underlineColorAndroid='#fff'
+              placeholderTextColor='#fff'
+              onSubmitEditing={()=>{this.confirmPassword.focus()}}
+              onChangeText={(password) => this.setState({password})}
+            />
+
+            <TextInput style={styles.input}
+              placeholder="Repeat New Password"
+              value={this.state.repassword}
+              secureTextEntry={true}
+              autoCapitalize='none'
+              underlineColorAndroid='#fff'
+              placeholderTextColor='#fff'
+              ref={(ref)=>{this.confirmPassword = ref}}
+              onChangeText={(repassword) => this.setState({repassword})}
+            />
+
+          </View>
+
+          <View style={styles.buttonsContainer}>
+            <GradientButton
+              text="Save"
+              textStyle={{ fontSize: 20 }}
+              gradientBegin= {ButtonColors.primary}
+              gradientEnd={ButtonColors.second}
+              height={60}
+              width='90%'
+              radius={15}
+              impact
+              onPressAction={this.saveProfile}
+            />
+          </View>
+
+        </Content>
+        <Footer/>
       </Container>
     );
   }

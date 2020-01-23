@@ -18,9 +18,7 @@ export default class Home extends React.Component {
       myLists:[],
       sharedLists:[],
       isLoading: true,
-      isLogged:''
     }
-    this.checkLog = this.checkLog.bind(this)
     this.fetchData = this.fetchData.bind(this)
     this.favoriteList = this.favoriteList.bind(this)
     this.favoriteSubscription = this.favoriteSubscription.bind(this)
@@ -29,15 +27,7 @@ export default class Home extends React.Component {
   }
 
   componentDidMount=()=>  {
-    this.checkLog()
     this.fetchData()
-  }
-
-  async checkLog(){
-    let status = await AsyncStorage.getItem('ID')
-    this.setState({
-      isLogged:status
-    })
   }
 
   async fetchData(){
@@ -150,7 +140,9 @@ export default class Home extends React.Component {
   ////////////////////////////////////////////////////////////////////
   
   render() {
-    const renderHome = 
+    if(this.state.isLoading ) return <Loader/>
+      
+    return (
       <Container style={styles.container}>
         <Header title="Home"/>
         
@@ -183,16 +175,7 @@ export default class Home extends React.Component {
 
         <Footer/>
 
-      </Container>
-    return (
-      <Container>
-        {this.state.isLogged != null
-          ? this.state.isLoading 
-            ? <Loader/> 
-            : renderHome
-          : null
-        }
-      </Container>      
+      </Container>     
     );
   }
 }

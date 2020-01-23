@@ -186,7 +186,20 @@ export default class AddList extends Component {
   }
 
   render() {
-    const renderList =
+
+    if(this.state.isVisible === true){
+      return(
+        <AddProduct 
+          isVisible={this.state.isVisible}
+          setVisible={this.setVisible}
+          types={this.state.types}
+          units={this.state.units}
+          makeProducts={this.makeProducts}
+        />
+      )
+    }
+     
+    return (
       <Container style={styles.container}>
         <Header title='Add list'/>
         <Content contentContainerStyle={styles.content}>
@@ -198,7 +211,7 @@ export default class AddList extends Component {
               value={this.state.listName}
               placeholderTextColor='#666'
               underlineColorAndroid='#666'
-              style={{width:'80%', padding:10, fontSize:18, textAlign:"center"}}
+              style={styles.listNameInput}
               onChangeText={(listName)=> this.setState({listName})}
             />
           </View>
@@ -221,19 +234,6 @@ export default class AddList extends Component {
           />
         </Content>
         <Footer/>
-      </Container>
-    return (
-      <Container>
-        {this.state.isVisible === true
-          ? <AddProduct 
-              isVisible={this.state.isVisible}
-              setVisible={this.setVisible}
-              types={this.state.types}
-              units={this.state.units}
-              makeProducts={this.makeProducts}
-            />
-          : renderList 
-        } 
       </Container>
     );
   }
@@ -261,5 +261,11 @@ const styles = StyleSheet.create({
       justifyContent:"center",
       padding:10
     },
+    listNameInput:{
+      width:'80%',
+      padding:10,
+      fontSize:18,
+      textAlign:"center"
+    }
   });
   

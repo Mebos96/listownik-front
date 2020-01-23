@@ -27,8 +27,8 @@ export default class LoginView extends Component {
     this.onClickLogin=this.onClickLogin.bind(this)
   }
 
-  async componentDidMount(){
-    await this.checkLog()
+  componentDidMount(){
+    this.checkLog()
   }
   
   validateForm(){
@@ -152,7 +152,13 @@ export default class LoginView extends Component {
             />
 
             <Text style={styles.buttonsText}>Don`t have an account?
-              <Text accessibilityRole='button' style={styles.textButton} onPress={()=> navigate('Register')}> Sign up!</Text>
+              <Text 
+                accessibilityRole='button'
+                style={styles.textButton} 
+                onPress={()=> navigate('Register')}
+              >
+                Sign up!
+              </Text>
             </Text>
           </View>
 
@@ -211,5 +217,3 @@ const styles = StyleSheet.create({
     opacity:0.5
   },
 });
-      
-// <Image style={{width:100,height:100, marginBottom:50}} source={require('../Images/Leaf.png')}/>

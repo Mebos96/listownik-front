@@ -11,34 +11,24 @@ import SwipeSharedLists from './MiniComponents/SwipeSharedLists'
 import { URL, Colors } from '../Static'
 
 export default class Favorite extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        myLists:[],
-        sharedLists:[],
-        isLoading: true,
-        isLogged:''
-      }
-      this.checkLog = this.checkLog.bind(this)
-      this.fetchData = this.fetchData.bind(this)
-      this.favoriteList = this.favoriteList.bind(this)
-      this.favoriteSubscription = this.favoriteSubscription.bind(this)
-      this.deleteList = this.deleteList.bind(this)
-      this.deleteSubscription = this.deleteSubscription.bind(this)
+  constructor(props) {
+    super(props);
+    this.state = {
+      myLists:[],
+      sharedLists:[],
+      isLoading: true,
     }
+    this.fetchData = this.fetchData.bind(this)
+    this.favoriteList = this.favoriteList.bind(this)
+    this.favoriteSubscription = this.favoriteSubscription.bind(this)
+    this.deleteList = this.deleteList.bind(this)
+    this.deleteSubscription = this.deleteSubscription.bind(this)
+  }
 
-  componentDidMount=()=>  {
-    this.checkLog()
+  componentDidMount=()=>{
     this.fetchData()
   }
 
-  async checkLog(){
-    let status = await AsyncStorage.getItem('ID')
-    this.setState({
-      isLogged:status
-    })
-  }
-/////////////////////////////////Fetch//////////////////////////////////////////
   async fetchData(){
     let id = await AsyncStorage.getItem('ID')
     if(id === null) return
@@ -153,36 +143,36 @@ export default class Favorite extends React.Component {
         
     return (
       <Container>
-      <Header title='Favorite lists'/>
+        <Header title='Favorite lists'/>
 
-      <Content style={{backgroundColor: Colors.second}}> 
+        <Content style={{backgroundColor: Colors.second}}> 
 
-        {/* MY LISTS */}
-        <Separator title='My lists'/>
+          {/* MY LISTS */}
+          <Separator title='My lists'/>
 
-        <View style={styles.swipeContainer}>
-          <SwipeMyLists 
-            lists={this.state.myLists.filter(({favorite})=> favorite === true)}
-            favoriteList={this.favoriteList}
-            deleteList={this.deleteList}
-          />
-        </View>
-
-        {/* SHARED LISTS */}
-        <Separator title='Lists shared to me'/>
-
-        <View style={styles.swipeContainer}>
-            <SwipeSharedLists
-              lists={this.state.sharedLists.filter(({favorite})=> favorite == true)}
-              favoriteSubscription={this.favoriteSubscription}
-              deleteSubscription={this.deleteSubscription}
+          <View style={styles.swipeContainer}>
+            <SwipeMyLists 
+              lists={this.state.myLists.filter(({favorite})=> favorite === true)}
+              favoriteList={this.favoriteList}
+              deleteList={this.deleteList}
             />
-        </View>
-      
-      </Content>
+          </View>
 
-      <Footer/>
-    </Container>
+          {/* SHARED LISTS */}
+          <Separator title='Lists shared to me'/>
+
+          <View style={styles.swipeContainer}>
+              <SwipeSharedLists
+                lists={this.state.sharedLists.filter(({favorite})=> favorite == true)}
+                favoriteSubscription={this.favoriteSubscription}
+                deleteSubscription={this.deleteSubscription}
+              />
+          </View>
+        
+        </Content>
+
+        <Footer/>
+      </Container>
     );
   }
 
