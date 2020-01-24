@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import {StyleSheet,TextInput, View,Text, KeyboardAvoidingView, Alert} from 'react-native';
+import {StyleSheet,TextInput, View,Text, Alert} from 'react-native';
 import { Overlay  } from 'react-native-elements'
-import {Picker} from "native-base";
+import {Picker, Icon} from "native-base";
 import GradientButton from 'react-native-gradient-buttons'
-import MultiButonAdd from './MultiButtonAdd'
 import { ListItem } from 'react-native-elements';
-import {URL, ButtonColors} from '../../Static'
+import {URL} from '../../Static'
 
 export default class AddProduct extends Component {
 
@@ -156,31 +155,28 @@ export default class AddProduct extends Component {
     return (
         <Overlay fullScreen overlayStyle={{alignItems:"center"}} isVisible={this.props.isVisible}>
             
-            <Text style={styles.text}>Add product</Text>
+            <View style={styles.header}>
+                <Text style={styles.text}>Add product</Text>
 
-            <View style={styles.buttonsContainer}>
                 <GradientButton
-                    text="Cancel"
-                    textStyle={{ fontSize:15 }}
-                    gradientBegin= {ButtonColors.primary}
-                    gradientEnd={ButtonColors.second}
-                    height={40}
-                    width='35%'
-                    radius={15}
-                    impact
-                    style={{margin:10}}
+                    text={<Icon name="exit" style={{color:"#fff"}}/>}
+                    textStyle={{ fontSize:20 }}
+                    gradientBegin= "#9b59b6"
+                    gradientEnd="#9b59b6"
+                    height={50}
+                    width={50}
+                    radius={50}
                     onPressAction={()=> this.props.setVisible()}
                 />
                 <GradientButton
-                    text="Add product"
-                    textStyle={{ fontSize:15 }}
-                    gradientBegin= {ButtonColors.primary}
-                    gradientEnd={ButtonColors.second}
-                    height={40}
-                    width='35%'
-                    radius={15}
-                    impact
-                    style={{margin:10}}
+                    text={<Icon name="add" style={{color:"#fff"}}/>}
+                    textStyle={{ fontSize:20 }}
+                    gradientBegin='#3498db'
+                    gradientEnd='#3498db'
+                    height={50}
+                    width={50}
+                    radius={50}
+                    style={{marginRight:"5%"}}
                     onPressAction={()=>this.closeOverlay()}
                 />
             </View>
@@ -190,7 +186,7 @@ export default class AddProduct extends Component {
                 value={this.state.name}
                 underlineColorAndroid='#000'
                 style={styles.input}
-                onChangeText={(event)=> this.searchProduct(event)}
+                onChangeText={(name)=> this.searchProduct(name)}
             />
 
             {/*Wyswietlenie listy produktów */}
@@ -274,7 +270,7 @@ export default class AddProduct extends Component {
                     ))}
                 </Picker>
             </View>
-
+            
         </Overlay>
     );
   }
@@ -283,6 +279,15 @@ export default class AddProduct extends Component {
 const styles = StyleSheet.create({
     text:{
         fontSize:20,
+        width:"55%",
+        marginLeft:"5%",
+    },
+    header:{
+        display:"flex",
+        width:"100%",
+        flexDirection:"row",
+        justifyContent:"space-between",
+        alignItems:"center"
     },
     container:{
         width:'90%',
@@ -305,12 +310,6 @@ const styles = StyleSheet.create({
         alignItems:"center",
         justifyContent:"center",
         borderRadius:5
-    },
-    buttonsContainer:{
-        width:'100%',
-        flexDirection:'row',
-        justifyContent:"space-around",
-        marginTop:'5%'
     },
   });
   

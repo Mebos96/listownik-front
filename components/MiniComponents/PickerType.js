@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Picker, Form } from "native-base";
-import { URL, Colors } from '../../Static'
+import {Picker} from "native-base";
+import { URL} from '../../Static'
 
 export default class PickerView extends Component {
     constructor(props) {
@@ -23,7 +23,6 @@ export default class PickerView extends Component {
         .then(res => {
             this.setState({
             data:res,
-            isLoading: false
             })
         })
         .catch(function (err) {
@@ -39,9 +38,9 @@ export default class PickerView extends Component {
                     mode="dropdown"
                     style={styles.picker}
                     selectedValue={this.state.selected}
-                    onValueChange={(value)=> {
-                        this.setState({selected:value})
-                        this.props.sortByType(value)
+                    onValueChange={(selected)=> {
+                        this.setState({selected})
+                        this.props.sortByType(selected)
                     }}
                 >
                     <Picker.Item label='All' value='0' />
@@ -64,6 +63,5 @@ const styles = StyleSheet.create({
         width: 150,
         height:35
     }
-
 });
   

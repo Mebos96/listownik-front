@@ -58,11 +58,11 @@ const SharedLists = props =>{
                         chevron
                         bottomDivider
                         onPress = {() => 
-                                props.navigation.navigate('ShowList',{
-                                    idList: data.item.id,
-                                    idOwner: data.item.idOwner_id
-                                }
-                            )}
+                            props.navigation.navigate('ShowList',{
+                                idList: data.item.id,
+                                idOwner: data.item.idOwner_id
+                            }
+                        )}
                     /> 
                 </View>
             </SwipeRow>

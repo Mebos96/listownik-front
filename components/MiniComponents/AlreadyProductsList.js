@@ -1,12 +1,9 @@
 import React,{Component} from 'react';
-import {Thumbnail, View, Icon} from 'native-base';
-import {StyleSheet, Text} from 'react-native';
+import {Icon} from 'native-base';
+import {StyleSheet} from 'react-native';
 import { ListItem, CheckBox} from 'react-native-elements'
 
 export default class ProductList extends Component{
-    state ={
-        uri:`https://image.flaticon.com/icons/png/512/2424/2424492.png`,
-    }
 
     roundAmount(amount){
         let number = parseFloat(amount)
@@ -27,13 +24,6 @@ export default class ProductList extends Component{
             }
             rightTitle={product.shopName}
             rightSubtitle={this.roundAmount(product.amount) + ' ' + product.unitShort}
-            // leftElement={
-            // // <Thumbnail
-            // //     square
-            // //     style={styles.icon}
-            // //     source={{uri: this.state.uri}}
-            // // />
-            // }
             leftElement={
                 this.props.title === undefined
                 ? <CheckBox

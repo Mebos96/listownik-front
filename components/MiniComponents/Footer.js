@@ -10,8 +10,8 @@ const footer = (props) =>{
             <FooterTab style={styles.footerContainer}>
                 <Button 
                     vertical 
-                    onPress={()=> props.navigation.reset(
-                        [NavigationActions.navigate({ routeName: 'Home' })], 0)
+                    onPress={()=> 
+                        props.navigation.reset([NavigationActions.navigate({ routeName: 'Home' })], 0)
                     }
                 >
                     <Icon name="home" />
@@ -19,23 +19,37 @@ const footer = (props) =>{
                 </Button>
                 <Button 
                     vertical
-                    onPress={()=> props.navigation.reset(
-                        [NavigationActions.navigate(
-                            { routeName: 'Favorite' }
-                        )],0
-                    )}>
+                    onPress={()=> 
+                        props.navigation.reset([NavigationActions.navigate({ routeName: 'Favorite' })],0)
+                    }
+                >
                     <Icon name='star'/>
                     <Text style={styles.footerText}>Favorite</Text>
                 </Button>
-                <Button vertical onPress={()=> props.navigation.reset([NavigationActions.navigate({ routeName: 'AddList' })], 0)}>
+                <Button 
+                    vertical
+                    onPress={()=> 
+                        props.navigation.reset([NavigationActions.navigate({ routeName: 'AddList' })], 0)
+                    }
+                >
                     <Icon name="add"/>
                     <Text style={styles.footerText}>Add list</Text>
                 </Button>
-                <Button vertical onPress={()=> props.navigation.reset([NavigationActions.navigate({ routeName: 'Share' })], 0)}>
+                <Button 
+                    vertical
+                    onPress={()=> 
+                        props.navigation.reset([NavigationActions.navigate({ routeName: 'Share' })], 0)
+                    }
+                >
                     <Icon name="share" />
                     <Text style={styles.footerText}>Share list</Text>
                 </Button>
-                <Button vertical onPress={()=> props.navigation.reset([NavigationActions.navigate({ routeName: 'Profile' })], 0)}>
+                <Button 
+                    vertical 
+                    onPress={()=> 
+                    props.navigation.reset([NavigationActions.navigate({ routeName: 'Profile' })], 0)
+                    }
+                >
                     <Icon name="person" />
                     <Text style={styles.footerText}>Profile</Text>
                 </Button>
